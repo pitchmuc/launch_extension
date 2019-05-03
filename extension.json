@@ -1,0 +1,129 @@
+{
+  "displayName": "AGS862 Complete Learning Extension",
+  "name": "ags862-complete-learning-extension",
+  "platform": "web",
+  "version": "0.1.1",
+  "description": "This extension is designed in order to learn from the Adobe Extension builder.",
+  "author": {
+    "name": "Adobe Consulting - Julien Piccini"
+  },
+  "viewBasePath": "src/view/",
+  "configuration": {
+    "viewPath": "configuration/configuration.html",
+    "schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "properties": {
+        "condition": {
+          "type": "string"
+        },
+        "event": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        },
+        "dataElements": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "events": [
+    {
+      "displayName": "myEventCondition",
+      "name": "myeventcondition",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "event": {
+            "type": "string"
+          }
+        }
+      },
+      "libPath": "src/lib/events/myeventcondition.js",
+      "viewPath": "events/myeventcondition.html"
+    }
+  ],
+  "conditions": [
+    {
+      "displayName": "myCondition",
+      "name": "mycondition",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "libPath": "src/lib/conditions/mycondition.js",
+      "viewPath": "conditions/mycondition.html"
+    }
+  ],
+  "actions": [
+    {
+      "displayName": "myAction",
+      "name": "myaction",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "libPath": "src/lib/actions/myaction.js",
+      "viewPath": "actions/myaction.html"
+    }
+  ],
+  "dataElements": [
+    {
+      "displayName": "Local Storage",
+      "name": "my_local_storage",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "libPath": "src/lib/dataElements/my_local_storage.js",
+      "viewPath": "dataElements/my_local_storage.html"
+    },
+    {
+      "displayName": "Session Storage",
+      "name": "my_session_storage",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "libPath": "src/lib/dataElements/my_session_storage.js",
+      "viewPath": "dataElements/my_session_storage.html"
+    },
+    {
+      "displayName": "Custom Param",
+      "name": "hash_param",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "hashParam": {
+            "type": "string"
+          }
+        }
+      },
+      "libPath": "src/lib/dataElements/hash_param.js",
+      "viewPath": "dataElements/hash_param.html"
+    }
+  ],
+  "sharedModules": [
+    {
+      "name": "mysharedmodule",
+      "libPath": "src/lib/sharedModules/mysharedmodule.js"
+    }
+  ],
+  "iconPath": "flask.svg"
+}
