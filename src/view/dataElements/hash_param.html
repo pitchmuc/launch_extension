@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Data Element</title>
+  </head>
+  <body>
+  <h1> Data Element Template</h1>
+  <p>This configuration panel is for the Hash Parameter Data Element.</p>
+  <p>Please indicate the key of the hash param and it will return the value :</p><input id='hashParam'></input>
+
+    <script src="https://assets.adobedtm.com/activation/reactor/extensionbridge/extensionbridge.min.js"></script>
+    <script>
+      window.extensionBridge.register({
+        init: function(info) {
+          if (info.settings) {
+            el = document.querySelector('#hashParam');
+            el.value = info.settings.hashParam;
+            // TODO Populate form values from persisted settings.
+          }
+        },
+
+        getSettings: function() {
+          myObj = {}
+          value = document.querySelector('#hashParam').value || "";
+          myObj['hashParam'] = value;
+          return myObj;
+          // TODO Return settings object from form values.
+        },
+
+        validate: function() {
+          el = document.querySelector('#hashParam');
+          if(el.value == ""){return false}
+          return true 
+          // TODO Return whether settings are valid.
+        }
+      });
+    </script>
+  </body>
+</html>

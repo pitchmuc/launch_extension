@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Condition</title>
+  </head>
+  <body>
+    <h1>Condition Template</h1>
+    <p id="fill">this extension is going to check for a specific value within this local storage : </p>
+    <p id="specificValue">This is my specific value : </p><input id='specValue'></input>
+    <p>if the value is there, it returns "true", otherwise it returns "false".</p>
+    
+    <script src="https://assets.adobedtm.com/activation/reactor/extensionbridge/extensionbridge.min.js"></script>
+    <script>
+      window.extensionBridge.register({
+        init: function(info) {
+          var el  = document.querySelector('#fill');/*define the element that I would like to focus on*/
+          if(info.extensionSettings){/*if the extension has global setting*/
+            if(info.extensionSettings.condition){/*if the extension has global setting for the condition*/
+              el.innerText += ' ' + info.extensionSettings.condition;
+            }
+          }
+          else{/*default use case*/
+            el.innerText += ' <nothing has been set in the Extension configuration>';
+          }
+          
+          if (info.settings != null) {/*if there has been a setup saved earlier, I will re-use the info*/
+            document.querySelector('#specValue').value = info.settings.value;
+          }
+        },
+
+        getSettings: function() {
+          myObj = {};
+          myObj['value'] = document.querySelector('#specValue').value || "";/* retrieve the information*/
+          return myObj;/*return the object*/ 
+        },
+
+        validate: function() {/*you can return false after some condition to check the correct information has been provided*/
+          return true
+        }
+      });
+    </script>
+  </body>
+</html>

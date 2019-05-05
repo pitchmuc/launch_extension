@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Private Extension Configuration</title>
+    <link rel="stylesheet" href="../global_config.css">
+  </head>
+  <body>
+    <h1>Extension configuration</h1>
+    <p>On this page we will configure the different elements for our extensions</p>
+    <h2>Condition Setup</h2>
+    <p>Please provide the name of your localStorage to check if Condition exists</p>
+    <input id="condition"></input>
+    <h2>Event Setup</h2>
+    <p>Please provide the name of the event you would like to setup</p>
+    <input id="event"></input>
+    <h2>Action Setup</h2>
+    <p>Do you want to display console.log() for your actions </p>
+    <select id='action'>
+        <option value=false>No</option>
+        <option value=true>Yes</option>
+    </select>
+    <h2>Data Element Setup</h2>
+    <p>I have specific query parameters key</p>
+    <input id="dataElements"></input>
+    <p></p>
+    <script src="https://assets.adobedtm.com/activation/reactor/extensionbridge/extensionbridge.min.js"></script>
+    <script>
+      window.extensionBridge.register({
+        init: function(info) {
+          if (info.settings) {// TODO Populate form values from persisted settings.
+            document.querySelector("#condition").value = info.settings.condition;
+            document.querySelector("#event").value = info.settings.event;
+            document.querySelector("#action").value = info.settings.action;
+            document.querySelector("#dataElements").value = info.settings.dataElements;
+          }
+        },
+
+        getSettings: function() {
+          myObject = new Object();/*your setting will be return by this function, however it needs to return an object*/
+          myObject['condition'] = document.querySelector("#condition").value;
+          myObject['event'] = document.querySelector("#event").value;
+          myObject['action'] = document.querySelector("#action").value;
+          myObject['dataElements'] = document.querySelector("#dataElements").value;
+          return myObject
+          // TODO Return settings object from form values.
+        },
+
+        validate: function() {/*making sure that the value is not containing space (not possible in URL)*/
+          queryParameter = document.querySelector("#dataElements").value;
+          return queryParameter.indexOf(' ')==-1;
+          // TODO Return true whether settings are valid.
+        }
+      });
+    </script>
+  </body>
+</html>

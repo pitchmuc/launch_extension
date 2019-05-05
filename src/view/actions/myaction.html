@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Action</title>
+  </head>
+  <body>
+    <h1>Action Template</h1>
+    <p>This is going to be template for my Action. However there is nothing to set here because it has been set in the Extension configuration.</p>
+    <p>The console would be display : <span id='consoleBool'></span></p>
+    <p>If set to true, a console.log will print the rule name and rule id</p>
+    <p>You can set comment for this action by clicking on the button <button id='note' class="ValidationWrapper">Note</button></p>
+    <script src="https://assets.adobedtm.com/activation/reactor/extensionbridge/extensionbridge.min.js"></script>
+    <script>
+    window.myObj = {'comment':''};/*creating the object here, in order to communicate with it later*/
+    window.code = '';/*default value for opening text editor*/
+      window.extensionBridge.register({
+        init: function(info) {
+          var el  = document.querySelector('#consoleBool');
+          if (info.settings) {
+            /*nothing can be set by the action configuration - so nothing should happen*/
+            window.myObj = info.settings /*re-set the code saved*/
+            console.log(myObj)
+            window.code = window.myObj.comment;/*expose the previous code*/
+
+          }
+          if(info.extensionSettings.condition){/*take Extension configuration - if any*/
+            el.innerText += info.extensionSettings.action; /*add the info*/
+          }
+          else{
+            el.innerText += "false";
+          }
+        },
+
+        getSettings: function() {
+          /*I would have needed to return,through an object, any info that are setup in the action module configuration.
+          But I don't set anything, so here it is empty and doing nothing. 
+           */
+          myObj = window.myObj;/*retrieve what has been set and keep it as */
+          return myObj;
+        },
+
+        validate: function() {
+          return true; /*you can return false after some condition to check the correct information has been provided*/
+        }
+      });
+    </script>
+    <script>
+    /*Async Function that populate my object*/
+      console.log('status on load time : '+window.code);/*in order to see the race condition issue*/
+      note = document.getElementById('note');
+      note.addEventListener('click',function(){
+        code = window.myObj.comment;/*retrieve the actual value passed before - init function has run*/
+        console.log('status on click : '+code)
+        var options = {'code':code, 'language':'plaintext'}/*options object to pass the correct setting to my view*/
+        window.extensionBridge.openCodeEditor(options)
+        .then(function(code) {
+          window.myObj['comment'] = code;/*passing the code to my object*/
+          console.log('code : ' + code);})
+        });
+    </script>
+  </body>
+</html>

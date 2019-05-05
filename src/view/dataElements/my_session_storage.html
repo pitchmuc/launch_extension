@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Data Element</title>
+  </head>
+  <body>
+  <h1> Data Element Template</h1>
+  <p>This configuration panel is for the sessionStorage Data Element. You will choose a sessionStorage name and we will retrieve the value inside.</p>
+  <p>The sessionStorage to retrieve :</p><input id='sessionStorage'></input>
+
+    <script src="https://assets.adobedtm.com/activation/reactor/extensionbridge/extensionbridge.min.js"></script>
+    <script>
+      window.extensionBridge.register({
+        init: function(info) {
+          if (info.settings) {/*if there is a persisting value */
+            el = document.querySelector('#sessionStorage');
+            el.value = info.settings.sessionStorage;
+          }
+        },
+
+        getSettings: function() {
+          myObj = {}/*create the object that needs to be returned*/
+          value = document.querySelector('#sessionStorage').value || "";/*if there is a value to retrieve */
+          myObj['sessionStorage'] = value;
+          return myObj;
+        },
+
+        validate: function() {
+          el = document.querySelector('#sessionStorage');
+          if(el.value == ""){return false}/*if the value that is retrieved is empty, it is not accepting it.*/
+          return true 
+        }
+      });
+    </script>
+  </body>
+</html>

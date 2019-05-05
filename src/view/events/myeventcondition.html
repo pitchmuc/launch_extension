@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Event</title>
+  </head>
+  <body>
+    <h1>My Event Configuration</h1>
+    <p>This event is going to listen to this type of event: </p>
+    <input id='event'></input>  <button id='default' onClick="default_val()">Default Value</button>
+    <p>Please replace if you want something different</p>
+    <script src="https://assets.adobedtm.com/activation/reactor/extensionbridge/extensionbridge.min.js"></script>
+    <script>
+      window.extensionBridge.register({
+        init: function(info) {/*this is for saved setting in your extension - info being the variable passed*/
+            if(info.extensionSettings){/*in case we want to use the global  extension*/
+              if(info.extensionSettings.event){/*making sure that the event has been configured*/
+                document.querySelector("#event").value = info.extensionSettings.event || "";
+              }
+            }
+            else if(info.settings.event && info.settings.event!=""){/*if the value has been overwritten by something else in the module*/
+              document.querySelector("#event").value = info.settings.event;
+            }
+            else{/*default is nothing*/
+              document.querySelector("#event").value = '--nothing--';
+            }
+            window.default_val = function(){/*will set the default to the extension setting, or to nothing*/
+              document.querySelector("#event").value = info.extensionSettings.event || "--nothing--";
+              // TODO Populate form values from persisted settings.
+            }
+            
+        },
+
+        getSettings: function() {
+          myObject = new Object();/*setting a new object*/
+          myObject['event']=document.querySelector("#event").value;
+          return myObject;/*return the object*/ 
+        },
+
+        validate: function() {/*you can return false after some condition to check the correct information has been provided*/
+          return true
+          // TODO Return whether settings are valid.
+        }
+      });
+    </script>
+  </body>
+</html>
